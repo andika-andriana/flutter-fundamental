@@ -4,8 +4,91 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int number = 1;
+
+  void tambahBilangan() {
+    if (number > 49) {
+      setState(() {
+        number = 0;
+      });
+    } else {
+      setState(() {
+        number = number + 1;
+      });
+    }
+  }
+
+  void kurangBiliangan() {
+    if (number < 1) {
+      setState(() {
+        number = 50;
+      });
+    } else {
+      setState(() {
+        number = number - 1;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(title: const Text("Statefull Example")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              number.toString(),
+              style: TextStyle(
+                  color: Colors.black, fontSize: 10 + number.toDouble()),
+            ),
+            Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: tambahBilangan,
+                      child: Text(
+                        "Tambah Bilangan",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blueAccent.shade100,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: kurangBiliangan,
+                      child: Text(
+                        "Kurangi Bilangan",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blueAccent.shade100,
+                      ),
+                    ),
+                  ],
+                )),
+          ],
+        ),
+      ),
+    ));
+  }
+}
+
+class ContainerExample extends StatelessWidget {
+  const ContainerExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +136,7 @@ class RowAndColoumnExample extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text("Latihan Row dan Column"),
+            title: const Text("Row & Column Example"),
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +164,6 @@ class RowAndColoumnExample extends StatelessWidget {
   }
 }
 
-// TEXT EXAMPLE
 class TextExample extends StatelessWidget {
   const TextExample({super.key});
 
@@ -89,7 +171,7 @@ class TextExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(title: const Text("Lorem Ipsum")),
+          appBar: AppBar(title: const Text("Text Example")),
           body: Center(
             child: Container(
               color: Colors.lightBlue.shade200,
