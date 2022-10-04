@@ -11,6 +11,47 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Container Example"),
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[
+                Colors.lightBlue.shade50,
+                Colors.lightBlue.shade200
+              ])),
+          margin: const EdgeInsets.fromLTRB(20, 20, 20, 50),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+          child: Container(
+            color: Colors.blueGrey.shade200,
+            child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: <Color>[
+                      Colors.lightBlue.shade200,
+                      Colors.lightBlue.shade50
+                    ])),
+                margin: const EdgeInsets.only(
+                    left: 10, right: 10, top: 10, bottom: 50)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class RowAndColoumnExample extends StatelessWidget {
+  const RowAndColoumnExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
           appBar: AppBar(
             title: const Text("Latihan Row dan Column"),
           ),
@@ -41,8 +82,8 @@ class MyApp extends StatelessWidget {
 }
 
 // TEXT EXAMPLE
-class TextApp extends StatelessWidget {
-  const TextApp({super.key});
+class TextExample extends StatelessWidget {
+  const TextExample({super.key});
 
   @override
   Widget build(BuildContext context) {
