@@ -57,29 +57,27 @@ class _MyAppState extends State<MyApp> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
+                  children: <Widget>[
+                    ElevatedButton(
+                      child: Text("Tambah Bilangan"),
                       onPressed: tambahBilangan,
-                      child: Text(
-                        "Tambah Bilangan",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.blueAccent.shade100,
-                      ),
                     ),
-                    TextButton(
+                    ElevatedButton(
+                      child: Text("Kurang Bilangan"),
                       onPressed: kurangBiliangan,
-                      child: Text(
-                        "Kurangi Bilangan",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.blueAccent.shade100,
-                      ),
                     ),
                   ],
                 )),
+            Container(
+              child: ElevatedButton(
+                child: Text("Back to Zero"),
+                onPressed: () {
+                  setState(() {
+                    number = 0;
+                  });
+                },
+              ),
+            )
           ],
         ),
       ),
