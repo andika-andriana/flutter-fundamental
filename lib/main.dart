@@ -4,8 +4,76 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<Widget> widgets = [];
+  int counter = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text("List & ListView"),
+          ),
+          body: ListView(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (counter < 50) {
+                            widgets.add(Text(
+                              "Text $counter",
+                              style: const TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 24,
+                                fontWeight: FontWeight.normal,
+                                decoration: TextDecoration.underline,
+                                decorationStyle: TextDecorationStyle.wavy,
+                                decorationColor: Colors.black12,
+                              ),
+                            ));
+                            counter++;
+                          } else {
+                            widgets.clear();
+                            counter = 1;
+                          }
+                        });
+                      },
+                      child: const Text("Add Row")),
+                  ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (counter > 1) {
+                            widgets.removeLast();
+                            counter--;
+                          }
+                        });
+                      },
+                      child: const Text("Remove Row")),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widgets,
+              )
+            ],
+          )),
+    );
+  }
+}
+
+class CustomFontExample extends StatelessWidget {
+  const CustomFontExample({super.key});
 
   @override
   Widget build(BuildContext context) {
