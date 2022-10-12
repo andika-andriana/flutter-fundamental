@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,6 +14,60 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // NEED IMPORT OBJ TO USE RANDOM NUMBER
+  Random random = Random();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Animated Container Example"),
+        ),
+        body: Center(
+          child: GestureDetector(
+              onTap: () {
+                setState(() {});
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(seconds: 1),
+                    width: 10.1 + random.nextInt(101),
+                    height: 10.1 + random.nextInt(101),
+                    color: Color.fromARGB(255, random.nextInt(256),
+                        random.nextInt(256), random.nextInt(256)),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    child: const Text(
+                      "Tap The Box To Change",
+                      style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 24,
+                          decoration: TextDecoration.underline,
+                          decorationStyle: TextDecorationStyle.wavy,
+                          decorationColor: Colors.blueAccent,
+                          decorationThickness: 5),
+                    ),
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+}
+
+class ListAndListViewExample extends StatefulWidget {
+  const ListAndListViewExample({super.key});
+
+  @override
+  State<ListAndListViewExample> createState() => _ListAndListViewExampleState();
+}
+
+class _ListAndListViewExampleState extends State<ListAndListViewExample> {
   List<Widget> widgets = [];
   int counter = 1;
 
