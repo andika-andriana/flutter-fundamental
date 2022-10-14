@@ -6,14 +6,74 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Flexible Layout",
+              style: TextStyle(fontFamily: "Poppins")),
+        ),
+        body: Column(
+          children: [
+            Flexible(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        margin: const EdgeInsets.all(4),
+                        color: Colors.blueGrey.shade100,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        margin: const EdgeInsets.all(4),
+                        color: Colors.blueGrey.shade200,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        margin: const EdgeInsets.all(4),
+                        color: Colors.blueGrey.shade300,
+                      ),
+                    )
+                  ],
+                )),
+            Flexible(
+                flex: 2,
+                child: Container(
+                  margin: const EdgeInsets.all(4),
+                  color: Colors.blueAccent.shade200,
+                )),
+            Flexible(
+                flex: 1,
+                child: Container(
+                  margin: const EdgeInsets.all(4),
+                  color: Colors.blueAccent.shade400,
+                ))
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class AnimatedContainerExample extends StatefulWidget {
+  const AnimatedContainerExample({super.key});
+
+  @override
+  State<AnimatedContainerExample> createState() =>
+      _AnimatedContainerExampleState();
+}
+
+class _AnimatedContainerExampleState extends State<AnimatedContainerExample> {
   // NEED IMPORT OBJ TO USE RANDOM NUMBER
   Random random = Random();
 
