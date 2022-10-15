@@ -5,8 +5,52 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<Widget> lists = [];
+
+  _MyAppState() {
+    for (var i = 0; i < 12; i++) {
+      lists.add(SizedBox(
+        height: 300,
+        width: 300,
+        child: Image(
+          image: NetworkImage("https://i.pravatar.cc/30$i"),
+          fit: BoxFit.contain,
+        ),
+      ));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Image Widget Example",
+            style: TextStyle(fontFamily: "Poppins"),
+          ),
+        ),
+        body: GridView.extent(
+            maxCrossAxisExtent: 300,
+            padding: const EdgeInsets.all(8),
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            children: lists),
+      ),
+    );
+  }
+}
+
+class StackLayoutExample extends StatelessWidget {
+  const StackLayoutExample({super.key});
 
   @override
   Widget build(BuildContext context) {
