@@ -627,24 +627,22 @@ class _StateFullState extends State<StateFull> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     ElevatedButton(
-                      child: Text("Tambah Bilangan"),
                       onPressed: tambahBilangan,
+                      child: const Text("Tambah Bilangan"),
                     ),
                     ElevatedButton(
-                      child: Text("Kurang Bilangan"),
                       onPressed: kurangBiliangan,
+                      child: const Text("Kurang Bilangan"),
                     ),
                   ],
                 )),
-            Container(
-              child: ElevatedButton(
-                child: Text("Back to Zero"),
-                onPressed: () {
-                  setState(() {
-                    number = 0;
-                  });
-                },
-              ),
+            ElevatedButton(
+              child: const Text("Back to Zero"),
+              onPressed: () {
+                setState(() {
+                  number = 0;
+                });
+              },
             )
           ],
         ),
@@ -708,11 +706,11 @@ class RowAndColoumnExample extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Text 1"),
-              Text("Text 2"),
-              Text("Text 3"),
-              Text("Text 4"),
-              Text("Text 5"),
+              const Text("Text 1"),
+              const Text("Text 2"),
+              const Text("Text 3"),
+              const Text("Text 4"),
+              const Text("Text 5"),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
