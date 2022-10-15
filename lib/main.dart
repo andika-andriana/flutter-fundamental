@@ -17,14 +17,22 @@ class _MyAppState extends State<MyApp> {
 
   _MyAppState() {
     for (var i = 0; i < 12; i++) {
-      lists.add(SizedBox(
-        height: 300,
-        width: 300,
+      // ASSETS IMAGES
+      lists.add(const SizedBox(
         child: Image(
-          image: NetworkImage("https://i.pravatar.cc/30$i"),
-          fit: BoxFit.contain,
+          image: AssetImage("images/default_images.jpeg"),
         ),
       ));
+
+      // NETWORK IMAGES
+      // lists.add(SizedBox(
+      //   height: 300,
+      //   width: 300,
+      //   child: Image(
+      //     image: NetworkImage("https://i.pravatar.cc/30$i"),
+      //     fit: BoxFit.contain,
+      //   ),
+      // ));
     }
   }
 
@@ -39,9 +47,8 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         body: GridView.extent(
-            maxCrossAxisExtent: 300,
+            maxCrossAxisExtent: 200,
             padding: const EdgeInsets.all(8),
-            mainAxisSpacing: 8,
             crossAxisSpacing: 8,
             children: lists),
       ),
