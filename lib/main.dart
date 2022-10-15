@@ -5,17 +5,56 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Layout Spacer Example",
+            style: TextStyle(fontFamily: "Poppins"),
+          ),
+        ),
+        body: Center(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              color: Colors.blueAccent.shade100,
+            ),
+            Container(
+              width: 80,
+              height: 80,
+              color: Colors.blueAccent.shade200,
+            ),
+            Container(
+              width: 80,
+              height: 80,
+              color: Colors.blueAccent.shade400,
+            )
+          ],
+        )),
+      ),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class ImageWidgetExample extends StatefulWidget {
+  const ImageWidgetExample({super.key});
+
+  @override
+  State<ImageWidgetExample> createState() => _ImageWidgetExampleState();
+}
+
+class _ImageWidgetExampleState extends State<ImageWidgetExample> {
   List<Widget> lists = [];
 
-  _MyAppState() {
+  _ImageWidgetExampleState() {
     for (var i = 0; i < 12; i++) {
       // ASSETS IMAGES
       lists.add(const SizedBox(
