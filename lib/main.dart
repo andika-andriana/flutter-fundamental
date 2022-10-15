@@ -5,8 +5,146 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Color color1 = Colors.blue;
+  Color color2 = Colors.green;
+  late Color colorTarget;
+
+  bool isAcceptIt = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Draggable Widget",
+            style: TextStyle(fontFamily: "Poppins"),
+          ),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // DRAGABLE TARGET
+            DragTarget<Color>(
+              onWillAccept: (val) => true,
+              onAccept: (val) {
+                isAcceptIt = true;
+                colorTarget = val;
+              },
+              builder: ((context, candidateData, rejectedData) {
+                return isAcceptIt
+                    ? SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Material(
+                          color: colorTarget,
+                          shape: const StadiumBorder(),
+                        ),
+                      )
+                    : const SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Material(
+                          color: Colors.black38,
+                          shape: StadiumBorder(),
+                        ),
+                      );
+              }),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // DRAGABLE 1
+                Draggable<Color>(
+                  data: color1,
+                  childWhenDragging: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Material(
+                      color: Colors.black38,
+                      shape: StadiumBorder(),
+                    ),
+                  ),
+                  feedback: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Material(
+                      color: color1.withOpacity(0.5),
+                      shape: const StadiumBorder(),
+                    ),
+                  ),
+                  child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Material(
+                      color: color1,
+                      shape: const StadiumBorder(),
+                    ),
+                  ),
+                ),
+
+                // DRAGABLE 2
+                Draggable<Color>(
+                  data: color2,
+                  childWhenDragging: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Material(
+                      color: Colors.black38,
+                      shape: StadiumBorder(),
+                    ),
+                  ),
+                  feedback: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Material(
+                      color: color2.withOpacity(0.5),
+                      shape: const StadiumBorder(),
+                    ),
+                  ),
+                  child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Material(
+                      color: color2,
+                      shape: const StadiumBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 24),
+              child: const Text(
+                "Drag Child to Parent Circle",
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  decoration: TextDecoration.overline,
+                  decorationStyle: TextDecorationStyle.wavy,
+                  decorationThickness: 5,
+                  decorationColor: Colors.amber,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LayoutSpacerExample extends StatelessWidget {
+  const LayoutSpacerExample({super.key});
 
   @override
   Widget build(BuildContext context) {
