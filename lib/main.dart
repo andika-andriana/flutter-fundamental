@@ -5,8 +5,53 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  TextEditingController textFieldController = TextEditingController(text: "");
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("TextField Example"),
+        ),
+        body: Container(
+          margin: const EdgeInsets.only(left: 16, right: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Text(
+                "Type password bellow",
+                style: TextStyle(fontFamily: "Poppins"),
+              ),
+              TextField(
+                obscureText: true,
+                onChanged: (value) {
+                  setState(() {});
+                },
+                controller: textFieldController,
+              ),
+              Text(
+                textFieldController.text,
+                style: const TextStyle(fontFamily: "Poppins"),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CardAndAppBarExample extends StatelessWidget {
+  const CardAndAppBarExample({super.key});
 
   @override
   Widget build(BuildContext context) {
