@@ -59,6 +59,72 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        body: Container(
+          color: Colors.grey.shade400,
+          child: ListView(
+            children: [
+              buildCard(
+                const Icon(
+                  Icons.email,
+                  color: Colors.black54,
+                ),
+                const Text(
+                  "Inbox",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+              buildCard(
+                const Icon(
+                  Icons.settings,
+                  color: Colors.black54,
+                ),
+                const Text(
+                  "Settings",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+              buildCard(
+                const Icon(
+                  Icons.notifications,
+                  color: Colors.black54,
+                ),
+                const Text(
+                  "Notification",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Card buildCard(Icon iconName, Text title) {
+    return Card(
+      color: Colors.grey.shade300,
+      elevation: 5,
+      margin: const EdgeInsets.only(top: 16, right: 16, left: 16),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(right: 8),
+              child: iconName,
+            ),
+            title
+          ],
+        ),
       ),
     );
   }
