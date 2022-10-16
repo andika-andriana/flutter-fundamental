@@ -11,55 +11,56 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        leading: const Icon(
-          Icons.adb,
-          size: 18,
-          color: Colors.white,
-        ),
-        title: const Text(
-          "Pattern AppBar",
-          style: TextStyle(
-            fontFamily: "Poppins",
-            fontSize: 18,
+      home: Scaffold(
+        appBar: AppBar(
+          leading: const Icon(
+            Icons.adb,
+            size: 18,
             color: Colors.white,
           ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.settings,
+          title: const Text(
+            "Pattern AppBar",
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontSize: 18,
               color: Colors.white,
-              size: 18,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.exit_to_app,
-              color: Colors.white,
-              size: 18,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 18,
+              ),
             ),
-          ),
-        ],
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.white, Colors.grey],
-              begin: FractionalOffset.topCenter,
-              end: FractionalOffset.bottomCenter,
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+                size: 18,
+              ),
             ),
-            image: DecorationImage(
-              image: AssetImage("images/app_bar_bg.png"),
-              fit: BoxFit.none,
-              repeat: ImageRepeat.repeat,
+          ],
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.white, Colors.grey],
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+              ),
+              image: DecorationImage(
+                image: AssetImage("images/app_bar_bg.png"),
+                fit: BoxFit.none,
+                repeat: ImageRepeat.repeat,
+              ),
             ),
           ),
         ),
       ),
-    ));
+    );
   }
 }
 
