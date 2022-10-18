@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,45 +12,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  TextEditingController textFieldController = TextEditingController(text: "");
+  TextEditingController usernameTextController =
+      TextEditingController(text: "");
+  TextEditingController passwordTextController =
+      TextEditingController(text: "");
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("TextField Example"),
-        ),
-        body: Container(
-          margin: const EdgeInsets.only(left: 16, right: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Text(
-                "Type password bellow",
-                style: TextStyle(fontFamily: "Poppins"),
-              ),
-              TextField(
-                obscureText: true,
-                onChanged: (value) {
-                  setState(() {});
-                },
-                controller: textFieldController,
-              ),
-              Text(
-                textFieldController.text,
-                style: const TextStyle(fontFamily: "Poppins"),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CardAndAppBarExample extends StatelessWidget {
-  const CardAndAppBarExample({super.key});
+  bool isSecure = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,40 +25,22 @@ class CardAndAppBarExample extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           leading: const Icon(
-            Icons.adb,
+            Icons.text_fields,
             size: 18,
-            color: Colors.white,
+            color: Colors.black,
           ),
           title: const Text(
-            "Pattern AppBar",
+            "Text Decoration Example",
             style: TextStyle(
               fontFamily: "Poppins",
               fontSize: 18,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.settings,
-                color: Colors.white,
-                size: 18,
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.exit_to_app,
-                color: Colors.white,
-                size: 18,
-              ),
-            ),
-          ],
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.white, Colors.grey],
+                colors: [Colors.white, Colors.lightBlue],
                 begin: FractionalOffset.topCenter,
                 end: FractionalOffset.bottomCenter,
               ),
@@ -105,83 +53,106 @@ class CardAndAppBarExample extends StatelessWidget {
           ),
         ),
         body: Container(
-          color: Colors.grey.shade400,
-          child: ListView(
+          margin: const EdgeInsets.only(left: 16, right: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildCard(
-                const Icon(
-                  Icons.email,
-                  color: Colors.black54,
-                ),
-                const Text(
-                  "Inbox",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.black54,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 16),
+                    child: const Icon(
+                      Icons.facebook_outlined,
+                      size: 50,
+                      color: Colors.blue,
+                    ),
                   ),
+                  Text(
+                    "Facelook".toUpperCase(),
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 50,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 60),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 24),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: "Username",
+                          prefixIcon: const Icon(Icons.account_circle_outlined),
+                          hintText: "Input username",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        controller: usernameTextController,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 24),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          prefixIcon: const Icon(Icons.lock),
+                          hintText: "Input password",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          suffix: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isSecure = !isSecure;
+                              });
+                            },
+                            child: (isSecure)
+                                ? const Icon(
+                                    Icons.no_encryption,
+                                    size: 14,
+                                    color: Colors.amber,
+                                  )
+                                : const Icon(
+                                    Icons.lock,
+                                    size: 14,
+                                    color: Colors.amber,
+                                  ),
+                          ),
+                        ),
+                        obscureText: isSecure,
+                        maxLength: 8,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        controller: passwordTextController,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              buildCard(
-                const Icon(
-                  Icons.settings,
-                  color: Colors.black54,
+              Container(
+                alignment: Alignment.centerRight,
+                margin: const EdgeInsets.only(top: 16),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Login"),
                 ),
-                const Text(
-                  "Settings",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-              buildCard(
-                const Icon(
-                  Icons.notifications,
-                  color: Colors.black54,
-                ),
-                const Text(
-                  "Notification",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
+              )
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Card buildCard(Icon iconName, Text title) {
-    return Card(
-      color: Colors.grey.shade300,
-      elevation: 5,
-      margin: const EdgeInsets.only(top: 16, right: 16, left: 16),
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 8),
-              child: iconName,
-            ),
-            title
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MaterialNavigatorExample extends StatelessWidget {
-  const MaterialNavigatorExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginPage(),
     );
   }
 }
