@@ -4,14 +4,68 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: TempPage());
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class TempPage extends StatelessWidget {
+  const TempPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+            title: const Text(
+          "Media Query Example",
+          style: TextStyle(fontFamily: "Poppins"),
+        )),
+        body: Center(
+          child: MediaQuery.of(context).orientation == Orientation.portrait
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: generatorChild(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: generatorChild(),
+                ),
+        ));
+  }
+}
+
+List<Widget> generatorChild() {
+  return <Widget>[
+    Container(
+      color: Colors.blueGrey.shade100,
+      width: 100,
+      height: 100,
+    ),
+    Container(
+      color: Colors.blueGrey.shade200,
+      width: 100,
+      height: 100,
+    ),
+    Container(
+      color: Colors.blueGrey.shade300,
+      width: 100,
+      height: 100,
+    ),
+  ];
+}
+
+class TextDecorationExample extends StatefulWidget {
+  const TextDecorationExample({super.key});
+
+  @override
+  State<TextDecorationExample> createState() => _TextDecorationExampleState();
+}
+
+class _TextDecorationExampleState extends State<TextDecorationExample> {
   TextEditingController usernameTextController =
       TextEditingController(text: "");
   TextEditingController passwordTextController =
