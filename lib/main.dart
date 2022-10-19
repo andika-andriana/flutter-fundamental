@@ -9,198 +9,69 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: TempPage());
-  }
-}
-
-class TempPage extends StatelessWidget {
-  const TempPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            title: const Text(
-          "Media Query Example",
-          style: TextStyle(fontFamily: "Poppins"),
-        )),
-        body: Center(
-          child: MediaQuery.of(context).orientation == Orientation.portrait
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: generatorChild(),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: generatorChild(),
-                ),
-        ));
-  }
-}
-
-List<Widget> generatorChild() {
-  return <Widget>[
-    Container(
-      color: Colors.blueGrey.shade100,
-      width: 100,
-      height: 100,
-    ),
-    Container(
-      color: Colors.blueGrey.shade200,
-      width: 100,
-      height: 100,
-    ),
-    Container(
-      color: Colors.blueGrey.shade300,
-      width: 100,
-      height: 100,
-    ),
-  ];
-}
-
-class TextDecorationExample extends StatefulWidget {
-  const TextDecorationExample({super.key});
-
-  @override
-  State<TextDecorationExample> createState() => _TextDecorationExampleState();
-}
-
-class _TextDecorationExampleState extends State<TextDecorationExample> {
-  TextEditingController usernameTextController =
-      TextEditingController(text: "");
-  TextEditingController passwordTextController =
-      TextEditingController(text: "");
-
-  bool isSecure = false;
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          leading: const Icon(
-            Icons.text_fields,
-            size: 18,
-            color: Colors.black,
-          ),
           title: const Text(
-            "Text Decoration Example",
-            style: TextStyle(
-              fontFamily: "Poppins",
-              fontSize: 18,
-              color: Colors.black,
-            ),
-          ),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.white, Colors.lightBlue],
-                begin: FractionalOffset.topCenter,
-                end: FractionalOffset.bottomCenter,
-              ),
-              image: DecorationImage(
-                image: AssetImage("images/app_bar_bg.png"),
-                fit: BoxFit.none,
-                repeat: ImageRepeat.repeat,
-              ),
-            ),
+            "InkWell Example",
+            style: TextStyle(fontFamily: "Poppins"),
           ),
         ),
-        body: Container(
-          margin: const EdgeInsets.only(left: 16, right: 16),
+        body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 16),
-                    child: const Icon(
-                      Icons.facebook_outlined,
-                      size: 50,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  Text(
-                    "Facelook".toUpperCase(),
-                    style: const TextStyle(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  backgroundColor: Colors.blueAccent.shade700,
+                ),
+                onPressed: () {},
+                child: Container(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: const Text(
+                    "Test",
+                    style: TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 50,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 60),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 24),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          labelText: "Username",
-                          prefixIcon: const Icon(Icons.account_circle_outlined),
-                          hintText: "Input username",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {});
-                        },
-                        controller: usernameTextController,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 24),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          prefixIcon: const Icon(Icons.lock),
-                          hintText: "Input password",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          suffix: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isSecure = !isSecure;
-                              });
-                            },
-                            child: (isSecure)
-                                ? const Icon(
-                                    Icons.no_encryption,
-                                    size: 14,
-                                    color: Colors.amber,
-                                  )
-                                : const Icon(
-                                    Icons.lock,
-                                    size: 14,
-                                    color: Colors.amber,
-                                  ),
-                          ),
-                        ),
-                        obscureText: isSecure,
-                        maxLength: 8,
-                        onChanged: (value) {
-                          setState(() {});
-                        },
-                        controller: passwordTextController,
-                      ),
-                    ),
-                  ],
                 ),
               ),
-              Container(
-                alignment: Alignment.centerRight,
-                margin: const EdgeInsets.only(top: 16),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Login"),
+              Material(
+                borderRadius: BorderRadius.circular(6),
+                elevation: 1,
+                child: Container(
+                  width: 150,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    gradient: const LinearGradient(
+                      colors: [Colors.blueAccent, Colors.amber],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(6),
+                    color: Colors.transparent,
+                    child: InkWell(
+                      splashColor: Colors.brown.shade100,
+                      borderRadius: BorderRadius.circular(6),
+                      onTap: () {},
+                      child: const Center(
+                        child: Text(
+                          "Test Ink Well",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               )
             ],
