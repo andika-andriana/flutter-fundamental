@@ -63,6 +63,8 @@ flutter:
   assets:
     - images/default_images.jpeg
     - images/app_bar_bg.png
+    - images/facebook.png
+    - images/twitter.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
