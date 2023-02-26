@@ -10,83 +10,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HeroAnimationExample(),
+      home: CustomHeightAppBar(),
     );
   }
 }
 
-class HeroAnimationExample extends StatelessWidget {
-  const HeroAnimationExample({super.key});
+class CustomHeightAppBar extends StatelessWidget {
+  const CustomHeightAppBar({super.key});
+  double getHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black45,
-        title: const Text(
-          "Hero Animation Example",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      body: GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const HeroAnimationDetailExample();
-          }));
-        },
-        child: Hero(
-          tag: "avatar",
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100 / 2),
-            child: const SizedBox(
-              width: 100,
-              height: 100,
-              child: Image(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  "https://media.licdn.com/dms/image/C5603AQE9N7B89s3HBQ/profile-displayphoto-shrink_400_400/0/1649749505592?e=1683158400&v=beta&t=ruw4t9nkui92bxL0_K8F7Jcmr7HBjONSE-Sr8mzwMJQ",
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(getHeight(context) * 0.3),
+        child: AppBar(
+          backgroundColor: Colors.black26,
+          flexibleSpace: Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                child: const Text(
+                  "Custom Height AppBar",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontFamily: "Poppins",
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class HeroAnimationDetailExample extends StatelessWidget {
-  const HeroAnimationDetailExample({super.key});
-  double getWidth(BuildContext context) => MediaQuery.of(context).size.width;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black45,
-        title: const Text(
-          "Hero Animation Detail Example",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      // ignore: sized_box_for_whitespace
-      body: Container(
-        width: getWidth(context),
-        height: getWidth(context),
-        child: const Hero(
-          tag: "avatar",
-          child: SizedBox(
-            child: Image(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                "https://media.licdn.com/dms/image/C5603AQE9N7B89s3HBQ/profile-displayphoto-shrink_400_400/0/1649749505592?e=1683158400&v=beta&t=ruw4t9nkui92bxL0_K8F7Jcmr7HBjONSE-Sr8mzwMJQ",
-              ),
-            ),
-          ),
+              )),
         ),
       ),
     );
