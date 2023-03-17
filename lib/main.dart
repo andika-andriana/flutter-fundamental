@@ -10,36 +10,37 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: CustomHeightAppBar(),
+      home: TabBarExample(),
     );
   }
 }
 
-class CustomHeightAppBar extends StatelessWidget {
-  const CustomHeightAppBar({super.key});
-  double getHeight(BuildContext context) => MediaQuery.of(context).size.height;
+class TabBarExample extends StatelessWidget {
+  const TabBarExample({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(getHeight(context) * 0.3),
-        child: AppBar(
-          backgroundColor: Colors.black26,
-          flexibleSpace: Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                child: const Text(
-                  "Custom Height AppBar",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontFamily: "Poppins",
-                  ),
-                ),
-              )),
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Icons.directions_bike)),
+              ],
+            ),
+            title: const Text('Tabs Demo'),
+          ),
+          body: const TabBarView(
+            children: [
+              Icon(Icons.directions_car),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
         ),
       ),
     );
