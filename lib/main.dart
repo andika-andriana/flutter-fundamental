@@ -22,23 +22,75 @@ class TabBarExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
-              ],
+            backgroundColor: Colors.blueGrey,
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(100),
+              child: Container(
+                color: Colors.black12,
+                child: const TabBar(
+                  labelColor: Colors.white,
+                  indicator: BoxDecoration(
+                      color: Colors.cyan,
+                      border: Border(
+                          bottom: BorderSide(
+                        color: Colors.black,
+                        width: 2,
+                      ))),
+                  indicatorColor: Colors.amberAccent,
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.home),
+                      text: 'Home',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.book_online),
+                      text: 'Book',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.shop),
+                      text: 'Shop',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.person),
+                      text: 'Profile',
+                    ),
+                  ],
+                ),
+              ),
             ),
-            title: const Text('Tabs Demo'),
+            title: Text(
+              'Top tab bar sample'.toUpperCase(),
+              style: const TextStyle(
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.italic),
+            ),
           ),
           body: const TabBarView(
             children: [
-              Icon(Icons.directions_car),
-              Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
+              Icon(
+                Icons.home,
+                color: Colors.black12,
+                size: 100,
+              ),
+              Icon(
+                Icons.book_online,
+                color: Colors.black12,
+                size: 100,
+              ),
+              Icon(
+                Icons.shop,
+                color: Colors.black12,
+                size: 100,
+              ),
+              Icon(
+                Icons.person,
+                color: Colors.black12,
+                size: 100,
+              ),
             ],
           ),
         ),
