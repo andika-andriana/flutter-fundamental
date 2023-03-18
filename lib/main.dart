@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/post_result_model.dart';
+import 'package:flutter_application_1/get_result_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,20 +11,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: PostToApiExample(),
+      home: GetFromApiExample(),
     );
   }
 }
 
-class PostToApiExample extends StatefulWidget {
-  const PostToApiExample({super.key});
+class GetFromApiExample extends StatefulWidget {
+  const GetFromApiExample({super.key});
 
   @override
-  State<PostToApiExample> createState() => _PostToApiExampleState();
+  State<GetFromApiExample> createState() => _GetFromApiExampleState();
 }
 
-class _PostToApiExampleState extends State<PostToApiExample> {
-  PostResult? postResult;
+class _GetFromApiExampleState extends State<GetFromApiExample> {
+  GetResult? getResult;
   bool isLoading = false;
 
   @override
@@ -32,7 +32,7 @@ class _PostToApiExampleState extends State<PostToApiExample> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Post To Api Example'),
+          title: const Text('Get From Api Example'),
         ),
         body: Center(
           child: Container(
@@ -41,8 +41,8 @@ class _PostToApiExampleState extends State<PostToApiExample> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  (postResult != null)
-                      ? ' id: ${postResult?.id}\n name: ${postResult?.name}\n job: ${postResult?.job}\n created At: ${postResult?.created}'
+                  (getResult != null)
+                      ? ' id: ${getResult?.id}\n name: ${getResult?.name}\n'
                       : 'load me'.toUpperCase(),
                   style: const TextStyle(fontSize: 20),
                 ),
@@ -54,23 +54,22 @@ class _PostToApiExampleState extends State<PostToApiExample> {
                         setState(() {
                           isLoading = true;
                         });
-                        PostResult.postToAPI('Andika', 'Mobile Dev')
-                            .then((value) {
+                        GetResult.getFromApi('1').then((value) {
                           setState(() {
-                            postResult = value;
+                            getResult = value;
                             isLoading = false;
                           });
                         });
                       },
                       child: Text(
-                        isLoading ? 'Loading..' : 'Post'.toUpperCase(),
+                        isLoading ? 'Loading..' : 'Get'.toUpperCase(),
                       ),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
                           isLoading = false;
-                          postResult = null;
+                          getResult = null;
                         });
                       },
                       child: const Icon(
