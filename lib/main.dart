@@ -32,7 +32,7 @@ class _PostToApiExampleState extends State<PostToApiExample> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Image Clip Example'),
+          title: const Text('Post To Api Example'),
         ),
         body: Center(
           child: Container(
