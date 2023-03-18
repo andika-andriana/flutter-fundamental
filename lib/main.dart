@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/post_result_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +11,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ImageClipExample(),
+      home: PostToApiExample(),
     );
   }
 }
 
-class ImageClipExample extends StatelessWidget {
-  const ImageClipExample({super.key});
+class PostToApiExample extends StatefulWidget {
+  const PostToApiExample({super.key});
+
+  @override
+  State<PostToApiExample> createState() => _PostToApiExampleState();
+}
+
+class _PostToApiExampleState extends State<PostToApiExample> {
+  PostResult? postResult;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,38 +37,54 @@ class ImageClipExample extends StatelessWidget {
         body: Center(
           child: Container(
             padding: const EdgeInsets.all(20),
-            child: ClipPath(
-              clipper: MyCustomClipper(),
-              child: const Image(
-                image: NetworkImage(
-                  'https://picsum.photos/seed/picsum/500/500',
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  (postResult != null)
+                      ? ' id: ${postResult?.id}\n name: ${postResult?.name}\n job: ${postResult?.job}\n created At: ${postResult?.created}'
+                      : 'load me'.toUpperCase(),
+                  style: const TextStyle(fontSize: 20),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        PostResult.postToAPI('Andika', 'Mobile Dev')
+                            .then((value) {
+                          setState(() {
+                            postResult = value;
+                            isLoading = false;
+                          });
+                        });
+                      },
+                      child: Text(
+                        isLoading ? 'Loading..' : 'Post'.toUpperCase(),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          isLoading = false;
+                          postResult = null;
+                        });
+                      },
+                      child: const Icon(
+                        Icons.clear,
+                        color: Colors.amber,
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
   }
-}
-
-class MyCustomClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height);
-    path.quadraticBezierTo(
-      size.width / 2,
-      size.width * 0.80,
-      size.width,
-      size.height,
-    );
-    path.lineTo(size.width, 0);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }

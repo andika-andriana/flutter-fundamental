@@ -40,6 +40,7 @@ dependencies:
   audioplayers: ^3.0.1
   qrscan: ^0.3.3
   permission_handler: ^10.2.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
