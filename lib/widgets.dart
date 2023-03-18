@@ -3,6 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+class ImageGradientOpacityExample extends StatelessWidget {
+  const ImageGradientOpacityExample({super.key});
+  double getWidth(BuildContext context) => MediaQuery.of(context).size.width;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Image Gradient Opacity Example"),
+        ),
+        body: Center(
+          child: ShaderMask(
+            shaderCallback: (rectangle) {
+              return const LinearGradient(
+                colors: [Colors.white, Colors.transparent],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ).createShader(
+                Rect.fromLTRB(0, 0, rectangle.width, rectangle.height),
+              );
+            },
+            child: Image(
+              width: getWidth(context) * 0.8,
+              image: const NetworkImage(
+                  'https://picsum.photos/seed/picsum/500/500'),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ColorfulButtonView extends StatelessWidget {
   const ColorfulButtonView({super.key});
 
