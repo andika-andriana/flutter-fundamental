@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/get_result_model.dart';
+import 'package:flutter_application_1/get_list_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,20 +11,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: GetFromApiExample(),
+      home: GetListFromApiExample(),
     );
   }
 }
 
-class GetFromApiExample extends StatefulWidget {
-  const GetFromApiExample({super.key});
+class GetListFromApiExample extends StatefulWidget {
+  const GetListFromApiExample({super.key});
 
   @override
-  State<GetFromApiExample> createState() => _GetFromApiExampleState();
+  State<GetListFromApiExample> createState() => _GetListFromApiExampleState();
 }
 
-class _GetFromApiExampleState extends State<GetFromApiExample> {
-  GetResult? getResult;
+class _GetListFromApiExampleState extends State<GetListFromApiExample> {
+  String result = "Load Me".toUpperCase();
   bool isLoading = false;
 
   @override
@@ -32,7 +32,7 @@ class _GetFromApiExampleState extends State<GetFromApiExample> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Get From Api Example'),
+          title: const Text('Get List From Api Example'),
         ),
         body: Center(
           child: Container(
@@ -41,9 +41,7 @@ class _GetFromApiExampleState extends State<GetFromApiExample> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  (getResult != null)
-                      ? ' id: ${getResult?.id}\n name: ${getResult?.name}\n'
-                      : 'load me'.toUpperCase(),
+                  result,
                   style: const TextStyle(fontSize: 20),
                 ),
                 Row(
@@ -54,9 +52,12 @@ class _GetFromApiExampleState extends State<GetFromApiExample> {
                         setState(() {
                           isLoading = true;
                         });
-                        GetResult.getFromApi('1').then((value) {
+                        GetListResult.getListFromApi('1', '5').then((value) {
+                          result = "";
+                          for (var val in value) {
+                            result += '[${val.name}]\n\n';
+                          }
                           setState(() {
-                            getResult = value;
                             isLoading = false;
                           });
                         });
@@ -69,7 +70,7 @@ class _GetFromApiExampleState extends State<GetFromApiExample> {
                       onPressed: () {
                         setState(() {
                           isLoading = false;
-                          getResult = null;
+                          result = "Load Me".toUpperCase();
                         });
                       },
                       child: const Icon(
