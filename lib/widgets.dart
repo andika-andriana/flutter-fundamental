@@ -1,10 +1,52 @@
 import 'dart:math';
+import 'dart:ui';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+
+class EnableFontFeatureExample extends StatelessWidget {
+  const EnableFontFeatureExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Enable Font Feature Example'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              Text(
+                "Lorem Ipsum 1 1/2",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 50,
+                  fontFeatures: [
+                    FontFeature.enable('smcp'),
+                    FontFeature.enable('frac'),
+                  ],
+                ),
+              ),
+              Text(
+                "Lorem Ipsum",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 50,
+                  fontFamily: "Poppins",
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class QrCodeReaderExample extends StatefulWidget {
   const QrCodeReaderExample({super.key});
@@ -323,7 +365,8 @@ class ImageGradientOpacityExample extends StatelessWidget {
             child: Image(
               width: getWidth(context) * 0.8,
               image: const NetworkImage(
-                  'https://picsum.photos/seed/picsum/500/500'),
+                'https://picsum.photos/seed/picsum/500/500',
+              ),
             ),
           ),
         ),

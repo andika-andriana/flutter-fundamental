@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,48 +10,56 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: EnableFontFeatureExample(),
+      home: ImageClipExample(),
     );
   }
 }
 
-class EnableFontFeatureExample extends StatelessWidget {
-  const EnableFontFeatureExample({super.key});
+class ImageClipExample extends StatelessWidget {
+  const ImageClipExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Enable Font Feature Example'),
+          title: const Text('Image Clip Example'),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              Text(
-                "Lorem Ipsum 1 1/2",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 50,
-                  fontFeatures: [
-                    FontFeature.enable('smcp'),
-                    FontFeature.enable('frac'),
-                  ],
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: ClipPath(
+              clipper: MyCustomClipper(),
+              child: const Image(
+                image: NetworkImage(
+                  'https://picsum.photos/seed/picsum/500/500',
                 ),
               ),
-              Text(
-                "Lorem Ipsum",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 50,
-                  fontFamily: "Poppins",
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+class MyCustomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.width * 0.80,
+      size.width,
+      size.height,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
