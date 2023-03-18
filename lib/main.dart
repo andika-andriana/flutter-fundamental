@@ -1,6 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
 void main() {
   runApp(const MyApp());
@@ -12,46 +12,42 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: QrCodeReaderExample(),
+      home: EnableFontFeatureExample(),
     );
   }
 }
 
-class QrCodeReaderExample extends StatefulWidget {
-  const QrCodeReaderExample({super.key});
-
-  @override
-  State<QrCodeReaderExample> createState() => _QrCodeReaderExampleState();
-}
-
-class _QrCodeReaderExampleState extends State<QrCodeReaderExample> {
-  String scanResult = 'Hasil Scan';
+class EnableFontFeatureExample extends StatelessWidget {
+  const EnableFontFeatureExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Qr Code Reader Example"),
+          title: const Text('Enable Font Feature Example'),
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(scanResult),
-              const SizedBox(
-                height: 20,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              Text(
+                "Lorem Ipsum 1 1/2",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 50,
+                  fontFeatures: [
+                    FontFeature.enable('smcp'),
+                    FontFeature.enable('frac'),
+                  ],
+                ),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  await Permission.camera.request();
-                  String? barcode = await scanner.scan();
-                  setState(() {
-                    scanResult = barcode.toString();
-                  });
-                },
-                child: Text(
-                  'scan'.toUpperCase(),
+              Text(
+                "Lorem Ipsum",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 50,
+                  fontFamily: "Poppins",
                 ),
               ),
             ],
