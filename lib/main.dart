@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/bloc/color_bloc.dart';
+import 'package:flutter_application_1/bloc/color_bloc_package.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,29 +11,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SingleBlocStateManagement(),
+    return const SingleBlocPackageStateManagementPage();
+  }
+}
+
+/// to avoid error use bellow class at withoud MaterialApp(...) at the top
+class SingleBlocPackageStateManagementPage extends StatelessWidget {
+  const SingleBlocPackageStateManagementPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ColorBlocPackage(),
+      child: const SingleBlocPackageStateManagement(),
     );
   }
 }
 
-class SingleBlocStateManagement extends StatefulWidget {
-  const SingleBlocStateManagement({super.key});
+class SingleBlocPackageStateManagement extends StatefulWidget {
+  const SingleBlocPackageStateManagement({super.key});
 
   @override
-  State<SingleBlocStateManagement> createState() =>
-      _SingleBlocStateManagementState();
+  State<SingleBlocPackageStateManagement> createState() =>
+      _SingleBlocPackageStateManagementState();
 }
 
-class _SingleBlocStateManagementState extends State<SingleBlocStateManagement> {
-  ColorBloc bloc = ColorBloc();
+class _SingleBlocPackageStateManagementState
+    extends State<SingleBlocPackageStateManagement> {
   bool isActive = false;
-
-  @override
-  void dispose() {
-    bloc.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +46,22 @@ class _SingleBlocStateManagementState extends State<SingleBlocStateManagement> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black45,
-          title: const Text("Single Bloc State Management"),
+          title: BlocBuilder<ColorBlocPackage, Color>(
+            builder: (context, state) => Text(
+              "Single Bloc Package State Management",
+              style: TextStyle(color: state),
+            ),
+          ),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              StreamBuilder(
-                stream: bloc.stateStream,
-                initialData: Colors.amber,
-                builder: (context, snapshot) => Container(
+              BlocBuilder<ColorBlocPackage, Color>(
+                builder: (context, state) => Container(
                   width: 200,
                   height: 200,
-                  color: snapshot.data,
+                  color: state,
                   margin: const EdgeInsets.only(bottom: 10),
                 ),
               ),
@@ -67,8 +76,12 @@ class _SingleBlocStateManagementState extends State<SingleBlocStateManagement> {
                       value: isActive,
                       onChanged: (switchVal) {
                         (switchVal == true)
-                            ? bloc.eventSink.add(ColorEvent.toLightBlue)
-                            : bloc.eventSink.add(ColorEvent.toAmber);
+                            ? context
+                                .read<ColorBlocPackage>()
+                                .add(ColortoLightBlue())
+                            : context
+                                .read<ColorBlocPackage>()
+                                .add(ColortoAmber());
                         setState(() => isActive = switchVal);
                       }),
                   const Text("Light Blue"),
