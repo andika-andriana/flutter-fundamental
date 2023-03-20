@@ -10,86 +10,106 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AnimatedSwitcherExample(),
+      home: AnimatedPaddingExample(),
     );
   }
 }
 
-class AnimatedSwitcherExample extends StatefulWidget {
-  const AnimatedSwitcherExample({super.key});
+class AnimatedPaddingExample extends StatefulWidget {
+  const AnimatedPaddingExample({super.key});
 
   @override
-  State<AnimatedSwitcherExample> createState() =>
-      _AnimatedSwitcherExampleState();
+  State<AnimatedPaddingExample> createState() => _AnimatedPaddingExampleState();
 }
 
-class _AnimatedSwitcherExampleState extends State<AnimatedSwitcherExample> {
-  bool isActive = false;
-  Widget animatedWidget = Container(
-    key: const Key('animatedWidget default'),
-    height: 150,
-    width: 300,
-    color: Colors.grey[300],
-  );
+class _AnimatedPaddingExampleState extends State<AnimatedPaddingExample> {
+  double animatePaddingValue = 4;
+
+  void tooglePadding() {
+    setState(() {
+      if (animatePaddingValue == 4) {
+        animatePaddingValue = 8;
+      } else {
+        animatePaddingValue = 4;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Animated Switcher Example'),
+          title: const Text('Animated Padding Example'),
         ),
-        body: Center(
+        body: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              AnimatedSwitcher(
-                duration: const Duration(
-                  seconds: 1,
+              Flexible(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.blue[200],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                child: animatedWidget,
-
-                // if need custom animation
-                // transitionBuilder: (child, animation) {
-                // scale
-                /*
-                  return ScaleTransition(
-                    scale: animation,
-                    child: animatedWidget,
-                  );
-                  */
-
-                // rotate
-                /*
-                  return RotationTransition(
-                    turns: animation,
-                    child: animatedWidget,
-                  );
-                  */
-                // },
               ),
-              Switch(
-                value: isActive,
-                onChanged: (value) {
-                  isActive = value;
-                  setState(() {
-                    if (isActive == false) {
-                      animatedWidget = Container(
-                        key: const Key('animatedWidget false'),
-                        height: 150,
-                        width: 300,
-                        color: Colors.grey[300],
-                      );
-                    } else {
-                      animatedWidget = Container(
-                        key: const Key('animatedWidget true'),
-                        height: 150,
-                        width: 300,
-                        color: Colors.blue[300],
-                      );
-                    }
-                  });
-                },
+              Flexible(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.blue[200],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
