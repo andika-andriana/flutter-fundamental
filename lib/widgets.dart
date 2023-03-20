@@ -9,6 +9,296 @@ import 'package:flutter_application_1/post_result_model.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SharedPreferencesExample extends StatefulWidget {
+  const SharedPreferencesExample({super.key});
+
+  @override
+  State<SharedPreferencesExample> createState() =>
+      _SharedPreferencesExampleState();
+}
+
+class _SharedPreferencesExampleState extends State<SharedPreferencesExample> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isSecure = false;
+
+  void saveData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('username', usernameController.text);
+    pref.setString('password', passwordController.text);
+  }
+
+  Future<String> getUsername() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('username') ?? 'no name loaded';
+  }
+
+  Future<String> getPassword() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('password') ?? 'no password loaded';
+  }
+
+  void loadData() {
+    getUsername()
+        .then((value) => usernameController.text = value)
+        .catchError((err) => usernameController.text = 'failed load username');
+    getPassword()
+        .then((value) => passwordController.text = value)
+        .catchError((err) => passwordController.text = 'failed load password');
+  }
+
+  void clearData() {
+    usernameController.clear();
+    passwordController.clear();
+  }
+
+  void removeData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove('username');
+    pref.remove('password');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Animated Padding Example'),
+        ),
+        body: Container(
+          margin: const EdgeInsets.only(left: 16, right: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 16),
+                    child: const Icon(
+                      Icons.facebook_outlined,
+                      size: 50,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Text(
+                    "Facelook".toUpperCase(),
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 50,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 60),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 24),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: "Username",
+                          prefixIcon: const Icon(Icons.account_circle_outlined),
+                          hintText: "Input username",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        controller: usernameController,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 24),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          prefixIcon: const Icon(Icons.lock),
+                          hintText: "Input password",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          suffix: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isSecure = !isSecure;
+                              });
+                            },
+                            child: (isSecure)
+                                ? const Icon(
+                                    Icons.no_encryption,
+                                    size: 14,
+                                    color: Colors.amber,
+                                  )
+                                : const Icon(
+                                    Icons.lock,
+                                    size: 14,
+                                    color: Colors.amber,
+                                  ),
+                          ),
+                        ),
+                        obscureText: isSecure,
+                        maxLength: 8,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        controller: passwordController,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                  alignment: Alignment.centerRight,
+                  margin: const EdgeInsets.only(top: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          removeData();
+                        },
+                        child: Text("Remove".toUpperCase()),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          clearData();
+                        },
+                        child: Text("Clear".toUpperCase()),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          loadData();
+                        },
+                        child: Text("Load".toUpperCase()),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          saveData();
+                        },
+                        child: Text("Login".toUpperCase()),
+                      ),
+                    ],
+                  ))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedPaddingExample extends StatefulWidget {
+  const AnimatedPaddingExample({super.key});
+
+  @override
+  State<AnimatedPaddingExample> createState() => _AnimatedPaddingExampleState();
+}
+
+class _AnimatedPaddingExampleState extends State<AnimatedPaddingExample> {
+  double animatePaddingValue = 4;
+
+  void tooglePadding() {
+    setState(() {
+      if (animatePaddingValue == 4) {
+        animatePaddingValue = 8;
+      } else {
+        animatePaddingValue = 4;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Animated Padding Example'),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.blue[200],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 500),
+                        padding: EdgeInsets.all(animatePaddingValue),
+                        child: GestureDetector(
+                          onTap: tooglePadding,
+                          child: Container(
+                            color: Colors.blue[200],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class AnimatedSwitcherExample extends StatefulWidget {
   const AnimatedSwitcherExample({super.key});

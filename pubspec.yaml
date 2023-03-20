@@ -41,6 +41,8 @@ dependencies:
   qrscan: ^0.3.3
   permission_handler: ^10.2.0
   http: ^0.13.5
+  shared_preferences: ^2.0.18
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
