@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/get_list_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,77 +10,88 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: GetListFromApiExample(),
+      home: AnimatedSwitcherExample(),
     );
   }
 }
 
-class GetListFromApiExample extends StatefulWidget {
-  const GetListFromApiExample({super.key});
+class AnimatedSwitcherExample extends StatefulWidget {
+  const AnimatedSwitcherExample({super.key});
 
   @override
-  State<GetListFromApiExample> createState() => _GetListFromApiExampleState();
+  State<AnimatedSwitcherExample> createState() =>
+      _AnimatedSwitcherExampleState();
 }
 
-class _GetListFromApiExampleState extends State<GetListFromApiExample> {
-  String result = "Load Me".toUpperCase();
-  bool isLoading = false;
+class _AnimatedSwitcherExampleState extends State<AnimatedSwitcherExample> {
+  bool isActive = false;
+  Widget animatedWidget = Container(
+    key: const Key('animatedWidget default'),
+    height: 150,
+    width: 300,
+    color: Colors.grey[300],
+  );
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Get List From Api Example'),
+          title: const Text('Animated Switcher Example'),
         ),
         body: Center(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  result,
-                  style: const TextStyle(fontSize: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              AnimatedSwitcher(
+                duration: const Duration(
+                  seconds: 1,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        GetListResult.getListFromApi('1', '5').then((value) {
-                          result = "";
-                          for (var val in value) {
-                            result += '[${val.name}]\n\n';
-                          }
-                          setState(() {
-                            isLoading = false;
-                          });
-                        });
-                      },
-                      child: Text(
-                        isLoading ? 'Loading..' : 'Get'.toUpperCase(),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          isLoading = false;
-                          result = "Load Me".toUpperCase();
-                        });
-                      },
-                      child: const Icon(
-                        Icons.clear,
-                        color: Colors.amber,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                child: animatedWidget,
+
+                // if need custom animation
+                // transitionBuilder: (child, animation) {
+                // scale
+                /*
+                  return ScaleTransition(
+                    scale: animation,
+                    child: animatedWidget,
+                  );
+                  */
+
+                // rotate
+                /*
+                  return RotationTransition(
+                    turns: animation,
+                    child: animatedWidget,
+                  );
+                  */
+                // },
+              ),
+              Switch(
+                value: isActive,
+                onChanged: (value) {
+                  isActive = value;
+                  setState(() {
+                    if (isActive == false) {
+                      animatedWidget = Container(
+                        key: const Key('animatedWidget false'),
+                        height: 150,
+                        width: 300,
+                        color: Colors.grey[300],
+                      );
+                    } else {
+                      animatedWidget = Container(
+                        key: const Key('animatedWidget true'),
+                        height: 150,
+                        width: 300,
+                        color: Colors.blue[300],
+                      );
+                    }
+                  });
+                },
+              )
+            ],
           ),
         ),
       ),
