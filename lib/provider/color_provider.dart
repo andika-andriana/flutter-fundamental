@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ApplicationColor with ChangeNotifier {
+class ColorProvider with ChangeNotifier {
   bool _isLightBlue = false;
 
   bool get isLightBlue => _isLightBlue;
