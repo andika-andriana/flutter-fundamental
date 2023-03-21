@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/provider/timer_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,18 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TimerExample();
+    return const CustomProgressBarExample();
   }
 }
 
-class TimerExample extends StatefulWidget {
-  const TimerExample({super.key});
+class CustomProgressBarExample extends StatefulWidget {
+  const CustomProgressBarExample({super.key});
 
   @override
-  State<TimerExample> createState() => _TimerExampleState();
+  State<CustomProgressBarExample> createState() =>
+      _CustomProgressBarExampleState();
 }
 
-class _TimerExampleState extends State<TimerExample> {
+class _CustomProgressBarExampleState extends State<CustomProgressBarExample> {
   int counter = 0;
   bool isStop = false;
   bool isBlack = true;
@@ -34,69 +37,106 @@ class _TimerExampleState extends State<TimerExample> {
           title: const Text("Timer Example"),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                counter.toString(),
-                style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.w600,
-                  color: isBlack ? Colors.black : Colors.amber,
-                ),
+          child: ChangeNotifierProvider<TimerProvider>(
+            create: (context) => TimerProvider(),
+            child: Consumer<TimerProvider>(
+              builder: (context, value, child) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomProgressBarView(
+                    width: 300,
+                    value: value.timer,
+                    totalValue: 100,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          if (value.timer != 100) value.timer = 100;
+                        },
+                        child: Text(
+                          "Reset Timer".toUpperCase(),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          Timer.periodic(
+                            const Duration(seconds: 1),
+                            (timer) {
+                              if (value.timer != 0) {
+                                value.timer -= 10;
+                              } else {
+                                timer.cancel();
+                              }
+                            },
+                          );
+                        },
+                        child: Text(
+                          "Start Timer".toUpperCase(),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                child: const Text("Realtime Run"),
-                onPressed: () {
-                  Timer.run(() {
-                    setState(() {
-                      isBlack = !isBlack;
-                    });
-                  });
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                child: const Text("Delay Run"),
-                onPressed: () {
-                  Timer(const Duration(seconds: 5), () {
-                    setState(() {
-                      isBlack = !isBlack;
-                    });
-                  });
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                child: const Text("Start Timer"),
-                onPressed: () {
-                  isStop = false;
-                  counter = 0;
-                  Timer.periodic(const Duration(milliseconds: 1), (timer) {
-                    if (isStop) {
-                      timer.cancel();
-                    } else {
-                      setState(() {
-                        counter++;
-                      });
-                    }
-                  });
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                child: const Text("Stop Timer"),
-                onPressed: () {
-                  setState(() {
-                    isStop = true;
-                  });
-                },
-              ),
-            ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomProgressBarView extends StatelessWidget {
+  final double width;
+  final int value, totalValue;
+
+  const CustomProgressBarView({
+    super.key,
+    required this.width,
+    required this.value,
+    required this.totalValue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    double ratio = value / totalValue;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.timer,
+          color: Colors.grey[600],
+        ),
+        const SizedBox(width: 8),
+        Stack(
+          children: [
+            Container(
+              width: width,
+              height: 10,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            Material(
+              borderRadius: BorderRadius.circular(8),
+              child: AnimatedContainer(
+                duration: const Duration(seconds: 1),
+                width: width * ratio,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: Colors.lightGreen[600],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
