@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/example/product_cart.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,59 +9,85 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProductCartPageExample();
+    return const SelectableTextDllExample();
   }
 }
 
-class ProductCartPageExample extends StatelessWidget {
-  const ProductCartPageExample({super.key});
+class SelectableTextDllExample extends StatefulWidget {
+  const SelectableTextDllExample({super.key});
+
+  @override
+  State<SelectableTextDllExample> createState() =>
+      _SelectableTextDllExampleState();
+}
+
+class _SelectableTextDllExampleState extends State<SelectableTextDllExample> {
+  List<bool> isSelected = [true, false, false];
+  ColorFilter colorFilter =
+      const ColorFilter.mode(Colors.blue, BlendMode.screen);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Custom Product Card"),
-          backgroundColor: primaryColor,
-        ),
-        body: ChangeNotifierProvider<ProductState>(
-          create: (context) => ProductState(),
-          child: Consumer<ProductState>(
-            builder: (context, productState, child) => Container(
-              alignment: Alignment.topCenter,
-              margin: const EdgeInsets.all(20),
-              child: ProductCart(
-                imageUrl:
-                    "https://fastly.picsum.photos/id/292/159/100.jpg?hmac=WjvnpzdmUDO40cmJwAqfsnZhYn6wBNwztULZKDgXJFg",
-                name: "Bawang Bombai Enak - 1kg",
-                price: "10.000",
-                qty: productState.qty,
-                onAddQty: () {
-                  productState.qty++;
-                },
-                onRemoveQty: () {
-                  productState.qty--;
-                },
-                onAddtoCart: () {},
-                notification: (productState.qty > 5) ? "Diskon 10%" : "",
-              ),
+      home: ColorFiltered(
+        colorFilter: colorFilter,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("SelectableText, ToggleButtons, ColorFiltered"),
+          ),
+          body: Container(
+            margin: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const SelectableText(
+                  "Lorem Ipsum adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf. Ia tidak hanya bertahan selama 5 abad, tapi juga telah beralih ke penataan huruf elektronik, tanpa ada perubahan apapun. Ia mulai dipopulerkan pada tahun 1960 dengan diluncurkannya lembaran-lembaran Letraset yang menggunakan kalimat-kalimat dari Lorem Ipsum, dan seiring munculnya perangkat lunak Desktop Publishing seperti Aldus PageMaker juga memiliki versi Lorem Ipsum.",
+                  showCursor: true,
+                ),
+                ToggleButtons(
+                  isSelected: isSelected,
+                  fillColor: Colors.blue.withOpacity(0.5),
+                  splashColor: Colors.blue.withOpacity(0.2),
+                  selectedColor: Colors.white,
+                  selectedBorderColor: Colors.blue,
+                  borderRadius: BorderRadius.circular(16),
+                  onPressed: (index) {
+                    if (index == 1) {
+                      colorFilter =
+                          const ColorFilter.mode(Colors.red, BlendMode.screen);
+                    } else if (index == 2) {
+                      colorFilter = const ColorFilter.mode(
+                          Colors.green, BlendMode.screen);
+                    } else {
+                      colorFilter =
+                          const ColorFilter.mode(Colors.blue, BlendMode.screen);
+                    }
+                    setState(() {
+                      for (var i = 0; i < isSelected.length; i++) {
+                        isSelected[i] = (i == index) ? true : false;
+                      }
+                    });
+                  },
+                  children: const [
+                    Icon(
+                      Icons.home,
+                      size: 30,
+                    ),
+                    Icon(
+                      Icons.shop,
+                      size: 30,
+                    ),
+                    Icon(
+                      Icons.person,
+                      size: 30,
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
         ),
       ),
     );
-  }
-}
-
-class ProductState extends ChangeNotifier {
-  int _qty = 0;
-
-  int get qty => _qty;
-  set qty(int newQty) {
-    if (newQty >= 0) {
-      _qty = newQty;
-      notifyListeners();
-    }
   }
 }
