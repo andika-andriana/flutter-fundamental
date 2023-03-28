@@ -1,6 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/provider/timer_provider.dart';
+import 'package:flutter_application_1/example/product_cart.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -12,75 +11,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomProgressBarExample();
+    return const ProductCartPageExample();
   }
 }
 
-class CustomProgressBarExample extends StatefulWidget {
-  const CustomProgressBarExample({super.key});
-
-  @override
-  State<CustomProgressBarExample> createState() =>
-      _CustomProgressBarExampleState();
-}
-
-class _CustomProgressBarExampleState extends State<CustomProgressBarExample> {
-  int counter = 0;
-  bool isStop = false;
-  bool isBlack = true;
+class ProductCartPageExample extends StatelessWidget {
+  const ProductCartPageExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Timer Example"),
+          title: const Text("Custom Product Card"),
+          backgroundColor: primaryColor,
         ),
-        body: Center(
-          child: ChangeNotifierProvider<TimerProvider>(
-            create: (context) => TimerProvider(),
-            child: Consumer<TimerProvider>(
-              builder: (context, value, child) => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomProgressBarView(
-                    width: 300,
-                    value: value.timer,
-                    totalValue: 100,
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          if (value.timer != 100) value.timer = 100;
-                        },
-                        child: Text(
-                          "Reset Timer".toUpperCase(),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          Timer.periodic(
-                            const Duration(seconds: 1),
-                            (timer) {
-                              if (value.timer != 0) {
-                                value.timer -= 10;
-                              } else {
-                                timer.cancel();
-                              }
-                            },
-                          );
-                        },
-                        child: Text(
-                          "Start Timer".toUpperCase(),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+        body: ChangeNotifierProvider<ProductState>(
+          create: (context) => ProductState(),
+          child: Consumer<ProductState>(
+            builder: (context, productState, child) => Container(
+              alignment: Alignment.topCenter,
+              margin: const EdgeInsets.all(20),
+              child: ProductCart(
+                imageUrl:
+                    "https://fastly.picsum.photos/id/292/159/100.jpg?hmac=WjvnpzdmUDO40cmJwAqfsnZhYn6wBNwztULZKDgXJFg",
+                name: "Bawang Bombai Enak - 1kg",
+                price: "10.000",
+                qty: productState.qty,
+                onAddQty: () {
+                  productState.qty++;
+                },
+                onRemoveQty: () {
+                  productState.qty--;
+                },
+                onAddtoCart: () {},
+                notification: (productState.qty > 5) ? "Diskon 10%" : "",
               ),
             ),
           ),
@@ -90,53 +56,14 @@ class _CustomProgressBarExampleState extends State<CustomProgressBarExample> {
   }
 }
 
-class CustomProgressBarView extends StatelessWidget {
-  final double width;
-  final int value, totalValue;
+class ProductState extends ChangeNotifier {
+  int _qty = 0;
 
-  const CustomProgressBarView({
-    super.key,
-    required this.width,
-    required this.value,
-    required this.totalValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    double ratio = value / totalValue;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.timer,
-          color: Colors.grey[600],
-        ),
-        const SizedBox(width: 8),
-        Stack(
-          children: [
-            Container(
-              width: width,
-              height: 10,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(8),
-              child: AnimatedContainer(
-                duration: const Duration(seconds: 1),
-                width: width * ratio,
-                height: 10,
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen[600],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            )
-          ],
-        ),
-      ],
-    );
+  int get qty => _qty;
+  set qty(int newQty) {
+    if (newQty >= 0) {
+      _qty = newQty;
+      notifyListeners();
+    }
   }
 }
