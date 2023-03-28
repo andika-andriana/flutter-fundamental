@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/example/widgets.dart';
 
 const Color primaryColor = Color.fromARGB(255, 232, 94, 20);
 const Color secondaryColor = Color.fromARGB(255, 21, 157, 0);
