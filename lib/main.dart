@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/monster_hive.dart';
+import 'package:flutter_application_1/pages/monster_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var appDirectory = await path_provider.getApplicationDocumentsDirectory();
+  await Hive.initFlutter(appDirectory.path);
+  Hive.registerAdapter(MonsterHiveAdapter());
   runApp(const MyApp());
 }
 
@@ -9,77 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DropdownButtonExample();
+    return const MonsterPage();
   }
-}
-
-class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
-
-  @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
-}
-
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  Person? selectedPerson;
-  List<Person> persons = [Person("Budi"), Person("Agus"), Person("Doni")];
-
-  List<DropdownMenuItem> generateItems(List<Person> persons) {
-    List<DropdownMenuItem> items = [];
-    for (var person in persons) {
-      items.add(
-        DropdownMenuItem(
-          value: person,
-          child: Text(person.name),
-        ),
-      );
-    }
-    return items;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Dropdown Button Example"),
-        ),
-        body: Container(
-          margin: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Select favorite name below"),
-              DropdownButton(
-                icon: const Icon(Icons.person),
-                isExpanded: true,
-                items: generateItems(persons),
-                onChanged: (value) {
-                  setState(() {
-                    selectedPerson = value;
-                  });
-                },
-                value: selectedPerson,
-              ),
-              const SizedBox(height: 16),
-              selectedPerson != null
-                  ? Text(
-                      "Selected is : ${selectedPerson?.name}",
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    )
-                  : const SizedBox(
-                      width: 10,
-                    ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Person {
-  String name;
-  Person(this.name);
 }
