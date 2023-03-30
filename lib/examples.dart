@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bloc/color_bloc.dart';
 import 'package:flutter_application_1/bloc/color_bloc_hydrated.dart';
 import 'package:flutter_application_1/bloc/color_bloc_package.dart';
+import 'package:flutter_application_1/bloc/user_bloc.dart';
+import 'package:flutter_application_1/pages/user_page.dart';
 import 'package:flutter_application_1/widgets/product_cart.dart';
 import 'package:flutter_application_1/pages/login_page.dart';
 import 'package:flutter_application_1/model/get_list_model.dart';
@@ -21,6 +23,18 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
+
+class MvvmArchitectureExample extends StatelessWidget {
+  const MvvmArchitectureExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => UserBloc(),
+      child: UserPage(),
+    );
+  }
+}
 
 class ListViewBuilderWithBlocExamplePage extends StatelessWidget {
   const ListViewBuilderWithBlocExamplePage({super.key});
