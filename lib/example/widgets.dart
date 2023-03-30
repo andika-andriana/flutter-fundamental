@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bloc/color_bloc.dart';
+import 'package:flutter_application_1/bloc/color_bloc_hydrated.dart';
 import 'package:flutter_application_1/bloc/color_bloc_package.dart';
 import 'package:flutter_application_1/example/product_cart.dart';
 import 'package:flutter_application_1/page/login_page.dart';
@@ -20,6 +21,91 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
+
+// please check commit before use below code.
+class HydratedBlocPackageStateManagementPage extends StatelessWidget {
+  const HydratedBlocPackageStateManagementPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ColorBlocHydratedPackage(),
+      child: const HydratedBlocPackageStateManagement(),
+    );
+  }
+}
+
+class HydratedBlocPackageStateManagement extends StatefulWidget {
+  const HydratedBlocPackageStateManagement({super.key});
+
+  @override
+  State<HydratedBlocPackageStateManagement> createState() =>
+      _HydratedBlocPackageStateManagementState();
+}
+
+class _HydratedBlocPackageStateManagementState
+    extends State<HydratedBlocPackageStateManagement> {
+  bool isActive = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black45,
+          title: BlocBuilder<ColorBlocHydratedPackage, Color>(
+            builder: (context, state) => Text(
+              "Hydrated Bloc Package State Management",
+              style: TextStyle(color: state),
+            ),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocBuilder<ColorBlocHydratedPackage, Color>(
+                builder: (context, color) => Container(
+                  width: 200,
+                  height: 200,
+                  color: color,
+                  margin: const EdgeInsets.only(bottom: 10),
+                ),
+              ),
+              BlocBuilder<ColorBlocHydratedPackage, Color>(
+                builder: (context, color) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<ColorBlocHydratedPackage>()
+                            .add(ColorHydratedtoAmber());
+                      },
+                      child: Text(
+                        "Amber".toUpperCase(),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<ColorBlocHydratedPackage>()
+                            .add(ColorHydratedtoLightBlue());
+                      },
+                      child: Text(
+                        "Light Blue".toUpperCase(),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class SelectableTextDllExample extends StatefulWidget {
   const SelectableTextDllExample({super.key});
