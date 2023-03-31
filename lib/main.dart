@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/mobx/counter_mobx.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -9,65 +11,54 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExtentionsExample();
+    return const MobXStateManagementExample();
   }
 }
 
-class ExtentionsExample extends StatelessWidget {
-  ExtentionsExample({super.key});
+CounterMobx counterMobx = CounterMobx();
 
-  final int bilangan = -5;
-  final List list = [0, 1, 2, 4, 5, 6, 7, 8, 9, 10];
+class MobXStateManagementExample extends StatelessWidget {
+  const MobXStateManagementExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Extention Example"),
+          title: const Text("Mobx State Management Example"),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Bilangan" & bilangan.negate().toString(),
-                style: const TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 40,
-                  fontWeight: FontWeight.w600,
+              Observer(
+                builder: (context) => Text(
+                  counterMobx.value.toString(),
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              Text(
-                "Angka Tengah" & list.getMidleValue().toString(),
-                style: const TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 40,
-                  fontWeight: FontWeight.w600,
-                ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () => counterMobx.decrement(),
+                    child: const Icon(Icons.arrow_downward),
+                  ),
+                  const SizedBox(width: 20),
+                  FloatingActionButton(
+                    onPressed: () => counterMobx.increment(),
+                    child: const Icon(Icons.arrow_upward),
+                  )
+                ],
               )
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-extension NumberExtention<T extends num> on num {
-  num negate() => -1 * this;
-}
-
-extension OperatorExtention<T extends String> on String {
-  String operator &(String rightHand) => "$this: $rightHand";
-}
-
-extension ListExtentions<T extends List> on List {
-  num getMidleValue() {
-    if (isEmpty) {
-      return 0;
-    } else {
-      return this[(length / 2).floor()];
-    }
   }
 }
