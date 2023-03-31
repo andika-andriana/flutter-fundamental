@@ -12,6 +12,8 @@ import 'package:flutter_application_1/bloc/user_bloc.dart';
 import 'package:flutter_application_1/pages/list_articles_page.dart';
 import 'package:flutter_application_1/pages/primary_page.dart';
 import 'package:flutter_application_1/pages/user_page.dart';
+import 'package:flutter_application_1/widgets/custom_button_division.dart';
+import 'package:flutter_application_1/widgets/custom_button_wo_division.dart';
 import 'package:flutter_application_1/widgets/product_cart.dart';
 import 'package:flutter_application_1/pages/login_page.dart';
 import 'package:flutter_application_1/model/get_list_model.dart';
@@ -30,6 +32,41 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'mobx/counter_mobx.dart';
+
+class DivisionStylePackageExample extends StatelessWidget {
+  const DivisionStylePackageExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Division Style Package Example"),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // button without division style
+              CustomButtonWoDivision(
+                mainColor: Colors.blue,
+                secondColor: Colors.red,
+                buttonText: "Division".toUpperCase(),
+              ),
+
+              // button with division style
+              CustomButtonDivision(
+                mainColor: Colors.blue,
+                secondColor: Colors.green,
+                buttonText: "Division".toUpperCase(),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 CounterMobx counterMobx = CounterMobx();
 

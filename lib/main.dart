@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/widgets/carousel.dart';
 import 'package:flutter_application_1/widgets/custom_button_division.dart';
 import 'package:flutter_application_1/widgets/custom_button_wo_division.dart';
 
@@ -11,39 +12,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DivisionStylePackageExample();
+    return const WidgetSliderExample();
   }
 }
 
-class DivisionStylePackageExample extends StatelessWidget {
-  const DivisionStylePackageExample({super.key});
+class WidgetSliderExample extends StatelessWidget {
+  const WidgetSliderExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Division Style Package Example"),
+          title: const Text("Widget Slider Example"),
+          backgroundColor: Colors.black,
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // button without division style
-              CustomButtonWoDivision(
-                mainColor: Colors.blue,
-                secondColor: Colors.red,
-                buttonText: "Division".toUpperCase(),
-              ),
-
-              // button with division style
-              CustomButtonDivision(
-                mainColor: Colors.blue,
-                secondColor: Colors.green,
-                buttonText: "Division".toUpperCase(),
-              )
-            ],
-          ),
+        body: SizedBox(
+          height: 250,
+          child: Carousel(),
         ),
       ),
     );
