@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/carousel.dart';
-import 'package:flutter_application_1/widgets/custom_button_division.dart';
-import 'package:flutter_application_1/widgets/custom_button_wo_division.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -27,10 +25,7 @@ class WidgetSliderExample extends StatelessWidget {
           title: const Text("Widget Slider Example"),
           backgroundColor: Colors.black,
         ),
-        body: SizedBox(
-          height: 250,
-          child: Carousel(),
-        ),
+        body: const Carousel(),
       ),
     );
   }
