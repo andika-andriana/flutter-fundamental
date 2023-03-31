@@ -20,6 +20,7 @@ import 'package:flutter_application_1/model/post_result_model.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_application_1/provider/timer_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/provider/color_provider.dart';
 import 'package:flutter_application_1/provider/balance_provider.dart';
@@ -28,6 +29,55 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'mobx/counter_mobx.dart';
+
+CounterMobx counterMobx = CounterMobx();
+
+class MobXStateManagementExample extends StatelessWidget {
+  const MobXStateManagementExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Mobx State Management Example"),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Observer(
+                builder: (context) => Text(
+                  counterMobx.value.toString(),
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () => counterMobx.decrement(),
+                    child: const Icon(Icons.arrow_downward),
+                  ),
+                  const SizedBox(width: 20),
+                  FloatingActionButton(
+                    onPressed: () => counterMobx.increment(),
+                    child: const Icon(Icons.arrow_upward),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class ExtentionsExample extends StatelessWidget {
   ExtentionsExample({super.key});

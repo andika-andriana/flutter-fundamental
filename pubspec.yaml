@@ -32,6 +32,7 @@ dependencies:
   audioplayers: ^3.0.1
   bloc: ^8.1.1
   cupertino_icons: ^1.0.2
+  division: ^0.9.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2

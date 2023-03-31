@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/mobx/counter_mobx.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_application_1/widgets/custom_button_division.dart';
+import 'package:flutter_application_1/widgets/custom_button_wo_division.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -11,49 +11,36 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MobXStateManagementExample();
+    return const DivisionStylePackageExample();
   }
 }
 
-CounterMobx counterMobx = CounterMobx();
-
-class MobXStateManagementExample extends StatelessWidget {
-  const MobXStateManagementExample({super.key});
+class DivisionStylePackageExample extends StatelessWidget {
+  const DivisionStylePackageExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Mobx State Management Example"),
+          title: const Text("Division Style Package Example"),
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Observer(
-                builder: (context) => Text(
-                  counterMobx.value.toString(),
-                  style: const TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+              // button without division style
+              CustomButtonWoDivision(
+                mainColor: Colors.blue,
+                secondColor: Colors.red,
+                buttonText: "Division".toUpperCase(),
               ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-                    onPressed: () => counterMobx.decrement(),
-                    child: const Icon(Icons.arrow_downward),
-                  ),
-                  const SizedBox(width: 20),
-                  FloatingActionButton(
-                    onPressed: () => counterMobx.increment(),
-                    child: const Icon(Icons.arrow_upward),
-                  )
-                ],
+
+              // button with division style
+              CustomButtonDivision(
+                mainColor: Colors.blue,
+                secondColor: Colors.green,
+                buttonText: "Division".toUpperCase(),
               )
             ],
           ),
