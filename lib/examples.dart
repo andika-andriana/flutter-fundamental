@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bloc/color_bloc.dart';
 import 'package:flutter_application_1/bloc/color_bloc_hydrated.dart';
 import 'package:flutter_application_1/bloc/color_bloc_package.dart';
+import 'package:flutter_application_1/bloc/list_articles_bloc.dart';
 import 'package:flutter_application_1/bloc/multi_color_bloc.dart';
 import 'package:flutter_application_1/bloc/multi_counter_bloc.dart';
 import 'package:flutter_application_1/bloc/user_bloc.dart';
+import 'package:flutter_application_1/pages/list_articles_page.dart';
 import 'package:flutter_application_1/pages/primary_page.dart';
 import 'package:flutter_application_1/pages/user_page.dart';
 import 'package:flutter_application_1/widgets/product_cart.dart';
@@ -26,6 +28,18 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
+
+class InfiniteListWithBlocExample extends StatelessWidget {
+  const InfiniteListWithBlocExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<ListArtclesBloc>(
+      create: (context) => ListArtclesBloc()..add(ListArticlesEvent()),
+      child: const ListArticlesPage(),
+    );
+  }
+}
 
 class DropdownButtonExample extends StatefulWidget {
   const DropdownButtonExample({super.key});
