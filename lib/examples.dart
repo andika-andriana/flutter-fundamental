@@ -12,6 +12,7 @@ import 'package:flutter_application_1/bloc/user_bloc.dart';
 import 'package:flutter_application_1/pages/list_articles_page.dart';
 import 'package:flutter_application_1/pages/primary_page.dart';
 import 'package:flutter_application_1/pages/user_page.dart';
+import 'package:flutter_application_1/widgets/carousel.dart';
 import 'package:flutter_application_1/widgets/custom_button_division.dart';
 import 'package:flutter_application_1/widgets/custom_button_wo_division.dart';
 import 'package:flutter_application_1/widgets/product_cart.dart';
@@ -32,6 +33,23 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'mobx/counter_mobx.dart';
+
+class WidgetSliderExample extends StatelessWidget {
+  const WidgetSliderExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Widget Slider Example"),
+          backgroundColor: Colors.black,
+        ),
+        body: const Carousel(),
+      ),
+    );
+  }
+}
 
 class DivisionStylePackageExample extends StatelessWidget {
   const DivisionStylePackageExample({super.key});

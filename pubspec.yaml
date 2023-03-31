@@ -33,6 +33,7 @@ dependencies:
   bloc: ^8.1.1
   cupertino_icons: ^1.0.2
   division: ^0.9.0
+  flare_flutter: ^3.0.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
@@ -72,6 +73,7 @@ flutter:
     - images/app_bar_bg.png
     - images/facebook.png
     - images/twitter.png
+    - assets/switch_daytime.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
