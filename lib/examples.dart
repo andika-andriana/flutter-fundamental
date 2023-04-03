@@ -22,6 +22,7 @@ import 'package:flutter_application_1/model/get_result_model.dart';
 import 'package:flutter_application_1/model/post_result_model.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_application_1/provider/timer_provider.dart';
+import 'package:flutter_application_1/widgets/switch_rive.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,28 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'mobx/counter_mobx.dart';
+
+class RiveFlutterExample extends StatelessWidget {
+  const RiveFlutterExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Rife Flutter Example"),
+        ),
+        body: const Center(
+          child: SizedBox(
+            width: 200,
+            height: 100,
+            child: SwicthRive(),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class WidgetSliderExample extends StatelessWidget {
   const WidgetSliderExample({super.key});
