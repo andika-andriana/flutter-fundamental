@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bloc/color_bloc.dart';
 import 'package:flutter_application_1/bloc/color_bloc_hydrated.dart';
@@ -10,8 +11,10 @@ import 'package:flutter_application_1/bloc/multi_color_bloc.dart';
 import 'package:flutter_application_1/bloc/multi_counter_bloc.dart';
 import 'package:flutter_application_1/bloc/user_bloc.dart';
 import 'package:flutter_application_1/pages/list_articles_page.dart';
+import 'package:flutter_application_1/pages/main_page.dart';
 import 'package:flutter_application_1/pages/primary_page.dart';
 import 'package:flutter_application_1/pages/user_page.dart';
+import 'package:flutter_application_1/services/firebase_auth_services.dart';
 import 'package:flutter_application_1/widgets/carousel.dart';
 import 'package:flutter_application_1/widgets/custom_button_division.dart';
 import 'package:flutter_application_1/widgets/custom_button_wo_division.dart';
@@ -38,6 +41,31 @@ import 'mobx/counter_mobx.dart';
 import 'package:flutter_application_1/model/album_services.dart';
 import 'package:http/http.dart' as http;
 import 'model/album.dart';
+
+class FirebaseAuthAnonymousExample extends StatelessWidget {
+  const FirebaseAuthAnonymousExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider.value(
+      value: FirebaseAuthServices.firabaseUserStream,
+      initialData: null,
+      child: const MaterialApp(
+        home: FirebaseAuthAnonymousWrapper(),
+      ),
+    );
+  }
+}
+
+class FirebaseAuthAnonymousWrapper extends StatelessWidget {
+  const FirebaseAuthAnonymousWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    User? user = Provider.of<User?>(context);
+    return (user == null) ? LoginPage() : const MainPage();
+  }
+}
 
 class GoogleFontsPackageExample extends StatelessWidget {
   const GoogleFontsPackageExample({super.key});
