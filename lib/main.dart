@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_application_1/model/album_services.dart';
+import 'package:http/http.dart' as http;
+import 'model/album.dart';
+
 void main() async {
   runApp(const MyApp());
 }
@@ -9,53 +13,50 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AccessibilityExample();
+    return const HttpSimulationMockito();
   }
 }
 
-class AccessibilityExample extends StatefulWidget {
-  const AccessibilityExample({super.key});
+class HttpSimulationMockito extends StatefulWidget {
+  const HttpSimulationMockito({super.key});
 
   @override
-  State<AccessibilityExample> createState() => _AccessibilityExampleState();
+  State<HttpSimulationMockito> createState() => _HttpSimulationMockitoState();
 }
 
-class _AccessibilityExampleState extends State<AccessibilityExample> {
-  int number = 0;
+class _HttpSimulationMockitoState extends State<HttpSimulationMockito> {
+  late final Future<Album> futureAlbum;
+
+  @override
+  void initState() {
+    super.initState();
+    futureAlbum = AlbumServices().fetchAlbum('1', http.Client());
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Fetch Data Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: Scaffold(
         appBar: AppBar(
-          title: Semantics(
-            hidden: true,
-            excludeSemantics: true,
-            child: const Text("Accessibility Example"),
-          ),
+          title: const Text('Fetch Data Example'),
         ),
         body: Center(
-          child: Semantics(
-            label:
-                "Ini adalah bilangan yang akan ditambahkan, Nilai saat ini adalah: ",
-            child: Text(
-              number.toString(),
-              style: const TextStyle(
-                fontFamily: "Poppins",
-                fontSize: 80,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              number++;
-            });
-          },
-          child: Semantics(
-            onTapHint: "Untuk menambah bilangan dengan 1",
-            child: const Icon(Icons.add),
+          child: FutureBuilder<Album>(
+            future: futureAlbum,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data!.title);
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+
+              // By default, show a loading spinner.
+              return const CircularProgressIndicator();
+            },
           ),
         ),
       ),
