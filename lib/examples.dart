@@ -34,6 +34,56 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'mobx/counter_mobx.dart';
+import 'package:flutter_application_1/model/album_services.dart';
+import 'package:http/http.dart' as http;
+import 'model/album.dart';
+
+class HttpSimulationMockito extends StatefulWidget {
+  const HttpSimulationMockito({super.key});
+
+  @override
+  State<HttpSimulationMockito> createState() => _HttpSimulationMockitoState();
+}
+
+class _HttpSimulationMockitoState extends State<HttpSimulationMockito> {
+  late final Future<Album> futureAlbum;
+
+  @override
+  void initState() {
+    super.initState();
+    futureAlbum = AlbumServices().fetchAlbum('1', http.Client());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Fetch Data Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Fetch Data Example'),
+        ),
+        body: Center(
+          child: FutureBuilder<Album>(
+            future: futureAlbum,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data!.title);
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+
+              // By default, show a loading spinner.
+              return const CircularProgressIndicator();
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class RiveFlutterExample extends StatelessWidget {
   const RiveFlutterExample({super.key});
