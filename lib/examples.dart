@@ -25,6 +25,7 @@ import 'package:flutter_application_1/provider/timer_provider.dart';
 import 'package:flutter_application_1/widgets/switch_rive.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/provider/color_provider.dart';
 import 'package:flutter_application_1/provider/balance_provider.dart';
@@ -37,6 +38,52 @@ import 'mobx/counter_mobx.dart';
 import 'package:flutter_application_1/model/album_services.dart';
 import 'package:http/http.dart' as http;
 import 'model/album.dart';
+
+class GoogleFontsPackageExample extends StatelessWidget {
+  const GoogleFontsPackageExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.montserratTextTheme().copyWith(),
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Google Fonts Package Example"),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                "bitter",
+                style: GoogleFonts.bitter(
+                  color: Colors.blue,
+                  fontSize: 30,
+                ),
+              ),
+              Text(
+                "rubikDirt",
+                style: GoogleFonts.rubikDirt(
+                  color: Colors.blue,
+                  fontSize: 30,
+                ),
+              ),
+              const Text(
+                "Default montserrat",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class HttpSimulationMockito extends StatefulWidget {
   const HttpSimulationMockito({super.key});
@@ -3545,7 +3592,7 @@ class MaterialNavigatorExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: LoginPage(),
     );
   }

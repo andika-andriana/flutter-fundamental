@@ -1,7 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_application_1/pages/login_page.dart';
+import 'package:flutter_application_1/pages/main_page.dart';
+import 'package:flutter_application_1/services/firebase_auth_services.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -10,52 +17,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GoogleFontsPackageExample();
+    return const FirebaseAuthAnonymousExample();
   }
 }
 
-class GoogleFontsPackageExample extends StatelessWidget {
-  const GoogleFontsPackageExample({super.key});
+class FirebaseAuthAnonymousExample extends StatelessWidget {
+  const FirebaseAuthAnonymousExample({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme().copyWith(),
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Google Fonts Package Example"),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                "bitter",
-                style: GoogleFonts.bitter(
-                  color: Colors.blue,
-                  fontSize: 30,
-                ),
-              ),
-              Text(
-                "rubikDirt",
-                style: GoogleFonts.rubikDirt(
-                  color: Colors.blue,
-                  fontSize: 30,
-                ),
-              ),
-              const Text(
-                "Default montserrat",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 30,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return StreamProvider.value(
+      value: FirebaseAuthServices.firabaseUserStream,
+      initialData: null,
+      child: const MaterialApp(
+        home: FirebaseAuthAnonymousWrapper(),
       ),
     );
+  }
+}
+
+class FirebaseAuthAnonymousWrapper extends StatelessWidget {
+  const FirebaseAuthAnonymousWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    User? user = Provider.of<User?>(context);
+    return (user == null) ? LoginPage() : const MainPage();
   }
 }
