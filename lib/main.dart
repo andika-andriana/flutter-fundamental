@@ -30,8 +30,6 @@ class GetXIntroExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final counterController = Get.put(CounterController());
-    // ignore: avoid_print
-    print("Check Parent Re-Render");
     return GetMaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -42,8 +40,6 @@ class GetXIntroExample extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Obx(() {
-                // ignore: avoid_print
-                print("Check Observer Re-Render");
                 return Text(
                   counterController.count.value.toString(),
                   style: const TextStyle(
@@ -57,8 +53,6 @@ class GetXIntroExample extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // ignore: avoid_print
-                      print(counterController.count.value);
                       if (counterController.count.value <= 0) {
                         Get.snackbar(
                           "Minimum 0",
@@ -73,9 +67,26 @@ class GetXIntroExample extends StatelessWidget {
                     child: const Icon(Icons.remove),
                   ),
                   ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => Colors.green,
+                      ),
+                    ),
                     onPressed: () {
-                      // ignore: avoid_print
-                      print(counterController.count.value);
+                      Get.defaultDialog(
+                        title: "Ketentuan Nilai",
+                        middleText:
+                            "Nilai tidak boleh kurang dari 0 dan lebih dari 5",
+                        textConfirm: "OK",
+                        onConfirm: () {
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                    child: const Text("Info"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
                       if (counterController.count.value >= 5) {
                         Get.snackbar(
                           "Maximum 5",
