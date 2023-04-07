@@ -15,6 +15,7 @@ import 'package:flutter_application_1/pages/main_page.dart';
 import 'package:flutter_application_1/pages/primary_page.dart';
 import 'package:flutter_application_1/pages/user_page.dart';
 import 'package:flutter_application_1/services/firebase_auth_services.dart';
+import 'package:flutter_application_1/services/firebase_firestore_services.dart';
 import 'package:flutter_application_1/widgets/carousel.dart';
 import 'package:flutter_application_1/widgets/custom_button_division.dart';
 import 'package:flutter_application_1/widgets/custom_button_wo_division.dart';
@@ -41,6 +42,143 @@ import 'mobx/counter_mobx.dart';
 import 'package:flutter_application_1/model/album_services.dart';
 import 'package:http/http.dart' as http;
 import 'model/album.dart';
+
+class FirebaseFirestoreExample extends StatefulWidget {
+  const FirebaseFirestoreExample({super.key});
+
+  @override
+  State<FirebaseFirestoreExample> createState() =>
+      _FirebaseFirestoreExampleState();
+}
+
+class _FirebaseFirestoreExampleState extends State<FirebaseFirestoreExample> {
+  bool isLoading = false;
+  int selectedIndex = 0;
+  String product = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Firebase Firestore Example"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            product != ""
+                ? Column(
+                    children: [
+                      const Text("Product : "),
+                      Text(product),
+                    ],
+                  )
+                : Container(),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                  selectedIndex = 0;
+                });
+                FirebaseFirestoreService.createOrEditProduct(
+                  "1",
+                  "T-shirt",
+                  20000,
+                ).whenComplete(() {
+                  Timer(const Duration(milliseconds: 2000), () {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  });
+                });
+              },
+              child: Text(
+                isLoading == true && selectedIndex == 0
+                    ? "Loading..."
+                    : "Add Product",
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isLoading = true;
+                  selectedIndex = 1;
+                });
+                FirebaseFirestoreService.createOrEditProduct(
+                  "1",
+                  "T-Shirt",
+                  12500,
+                ).whenComplete(() {
+                  Timer(const Duration(milliseconds: 2000), () {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  });
+                });
+              },
+              child: Text(
+                isLoading == true && selectedIndex == 1
+                    ? "Loading..."
+                    : "Edit Product",
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isLoading = true;
+                  selectedIndex = 2;
+                });
+                FirebaseFirestoreService.getProductById("1")
+                    .then(
+                  (snapshot) => setState(() {
+                    product = snapshot.data().toString();
+                  }),
+                )
+                    .whenComplete(() {
+                  Timer(const Duration(milliseconds: 2000), () {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  });
+                });
+              },
+              child: Text(
+                isLoading == true && selectedIndex == 2
+                    ? "Loading..."
+                    : "Get Product",
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isLoading = true;
+                  selectedIndex = 3;
+                });
+                FirebaseFirestoreService.deleteProducById("1").whenComplete(() {
+                  Timer(const Duration(milliseconds: 2000), () {
+                    setState(() {
+                      isLoading = false;
+                      product = "";
+                    });
+                  });
+                });
+              },
+              child: Text(
+                isLoading == true && selectedIndex == 3
+                    ? "Loading..."
+                    : "Delete Product",
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class FirebaseAuthAnonymousExample extends StatelessWidget {
   const FirebaseAuthAnonymousExample({super.key});
