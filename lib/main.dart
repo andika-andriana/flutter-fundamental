@@ -56,11 +56,37 @@ class GetXIntroExample extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () => counterController.increment(),
+                    onPressed: () {
+                      // ignore: avoid_print
+                      print(counterController.count.value);
+                      if (counterController.count.value <= 0) {
+                        Get.snackbar(
+                          "Minimum 0",
+                          "Counter tidak boleh kurang dari 0",
+                          snackPosition: SnackPosition.BOTTOM,
+                          duration: const Duration(milliseconds: 1000),
+                        );
+                      } else {
+                        counterController.decrement();
+                      }
+                    },
                     child: const Icon(Icons.remove),
                   ),
                   ElevatedButton(
-                    onPressed: () => counterController.increment(),
+                    onPressed: () {
+                      // ignore: avoid_print
+                      print(counterController.count.value);
+                      if (counterController.count.value >= 5) {
+                        Get.snackbar(
+                          "Maximum 5",
+                          "Counter tidak boleh lebih dari 5",
+                          snackPosition: SnackPosition.BOTTOM,
+                          duration: const Duration(milliseconds: 1000),
+                        );
+                      } else {
+                        counterController.increment();
+                      }
+                    },
                     child: const Icon(Icons.add),
                   ),
                 ],
