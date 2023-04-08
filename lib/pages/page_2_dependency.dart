@@ -12,7 +12,6 @@ class Page2Dependency extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
         title: const Text("Page 2 Dependency"),
       ),
       body: Center(
@@ -41,13 +40,6 @@ class Page2Dependency extends StatelessWidget {
                 Get.offAllNamed("/page1");
               },
               child: const Text("Pop to Top Page 1"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // shorthand navigator pop
-                Get.back();
-              },
-              child: const Text("Prev Page"),
             ),
           ],
         ),
