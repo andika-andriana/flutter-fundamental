@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/bindings/page_binding.dart';
 import 'package:flutter_application_1/pages/page_0_dependency.dart';
 import 'package:flutter_application_1/pages/page_1_dependency.dart';
 import 'package:flutter_application_1/pages/page_2_dependency.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -44,7 +43,7 @@ class GetXRouteManagementExample extends StatelessWidget {
         GetPage(name: "/", page: () => const Page0Dependency()),
         GetPage(
           name: "/page1",
-          page: () => const Page1Dependency(),
+          page: () => Page1Dependency(),
           // binding with class binding getx
           binding: PageBinding(),
           //

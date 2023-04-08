@@ -14,6 +14,8 @@ class Page2Dependency extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Page 2 Dependency"),
       ),
+      backgroundColor:
+          pageDependency.isBackgroundColorEnable.value ? Colors.blue : null,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
