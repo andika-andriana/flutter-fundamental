@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/widgets/counter_getx_simple.dart';
+import 'package:flutter_application_1/widgets/counter_getx_workers.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -33,7 +34,7 @@ class GetXIntroExample extends StatelessWidget {
           title: const Text("Get X Intro Example"),
         ),
         body: const Center(
-          child: CounterGetXSimple(),
+          child: CounterGetXWorkers(),
         ),
       ),
     );
