@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/pages/page_1_dependency.dart';
+import 'package:flutter_application_1/pages/page_2_dependency.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,25 +29,11 @@ class GetXRouteManagementExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Get X Route Management Example"),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // get route shorthand push navigator
-                  Get.to(Page1Dependency());
-                },
-                child: const Text("Next Page"),
-              )
-            ],
-          ),
-        ),
-      ),
+      home: Page1Dependency(),
+      routes: {
+        "/page1": (context) => Page1Dependency(),
+        "/page2": (context) => Page2Dependency(),
+      },
     );
   }
 }

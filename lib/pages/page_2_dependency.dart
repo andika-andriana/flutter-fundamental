@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/getx/page_dependency.dart';
-import 'package:flutter_application_1/pages/page_1_dependency.dart';
 import 'package:get/get.dart';
 
 class Page2Dependency extends StatelessWidget {
@@ -32,14 +31,14 @@ class Page2Dependency extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // shorthand navigator pop to
-                Get.off(Page1Dependency());
+                Get.offNamed("/page1");
               },
               child: const Text("Pop to Page 1"),
             ),
             ElevatedButton(
               onPressed: () {
                 // shorthand navigator pop to top
-                Get.offAll(Page1Dependency());
+                Get.offAllNamed("/page1");
               },
               child: const Text("Pop to Top Page 1"),
             ),
