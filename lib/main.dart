@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_1/widgets/counter_getx_simple.dart';
+import 'package:flutter_application_1/pages/page_1_dependency.dart';
 import 'package:flutter_application_1/widgets/counter_getx_workers.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,25 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme()),
-      home: const GetXIntroExample(),
-    );
-  }
-}
-
-class GetXIntroExample extends StatelessWidget {
-  const GetXIntroExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Get X Intro Example"),
-        ),
-        body: const Center(
-          child: CounterGetXWorkers(),
-        ),
-      ),
+      home: const Page1Dependency(),
     );
   }
 }

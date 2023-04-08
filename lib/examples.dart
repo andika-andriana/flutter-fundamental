@@ -29,6 +29,7 @@ import 'package:flutter_application_1/provider/timer_provider.dart';
 import 'package:flutter_application_1/widgets/switch_rive.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/provider/color_provider.dart';
@@ -42,6 +43,25 @@ import 'mobx/counter_mobx.dart';
 import 'package:flutter_application_1/model/album_services.dart';
 import 'package:http/http.dart' as http;
 import 'model/album.dart';
+import 'widgets/counter_getx_workers.dart';
+
+class GetXIntroExample extends StatelessWidget {
+  const GetXIntroExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Get X Intro Example"),
+        ),
+        body: const Center(
+          child: CounterGetXWorkers(),
+        ),
+      ),
+    );
+  }
+}
 
 class FirebaseFirestoreExample extends StatefulWidget {
   const FirebaseFirestoreExample({super.key});
